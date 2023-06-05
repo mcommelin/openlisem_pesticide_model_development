@@ -53,7 +53,7 @@ To run the code and analysis for this research the following software and data i
  - the primary dataset
  
 The observational dataset should be downloaded, and added in a subfolder 'data/'.
-Then open the R project file: 'model_development.Rproj'. The R script with the full workflow for this study is: 'paper_all_steps.R'
+Then open the R project file: 'openlisem_pesticide_model_development.Rproj'. The R script with the full workflow for this study is: 'paper_all_steps.R'
 In this document further guidance on setup and choices is given.
 Required packages can be installed with: 'install.packages("package name")'.
 
