@@ -1,0 +1,14 @@
+# values for variables that are homogeneous over the whole catchment
+
+var, val
+thetas1, 0.44
+thetas2, 0.42
+ksat2, 7.7
+thetai2, 0.32
+soildep1, 300
+soildep2, 1200
+slope_channel, 0.022
+psi2, 11
+coh_bare, 2.5
+coh_wheels, 7.85
+d50, 50

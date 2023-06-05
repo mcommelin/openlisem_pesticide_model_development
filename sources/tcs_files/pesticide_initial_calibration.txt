@@ -1,0 +1,22 @@
+# Vary values per pesticide; 
+# kd, kfilm and kr give new value, range is undefined!!!
+# For concentration give factor, range between 0.8 and 1.2
+# separate values for each event
+
+[2019-05-28]
+name, kd, kr, kfilm, conc_cal_rat
+Metobromuron, 197, 0.0016, 5e-06, 1
+Glyphosate, 15844, 0.0016, 5e-06, 1
+
+var, val
+zs, 0.04
+zm, 0.0025
+
+[2020-08-16]
+name, kd, kr, kfilm, conc_cal_rat
+Metobromuron, 197, 0.0016, 5e-06, 1
+Glyphosate, 15844, 0.0016, 5e-06, 1
+
+var, val
+zs, 0.04
+zm, 0.0025

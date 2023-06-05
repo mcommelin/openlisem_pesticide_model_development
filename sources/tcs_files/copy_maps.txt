@@ -1,0 +1,14 @@
+files to copy from tcrp folder after TCRP run
+
+catchment.map
+channum.map
+compacted.map
+dem_catch.map
+landuse.map
+ldd_catch.map
+mask.map
+outlet.map
+roughnes.map
+slope.map
+tilldir.map
+thalweg.map

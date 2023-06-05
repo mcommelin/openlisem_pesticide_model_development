@@ -1,0 +1,30 @@
+# Vary values per crop type;
+# separate values for each event
+# '-77' = value not available for calibration
+
+[2019-05-28]
+crop_type, n_cal, thetai1_cal, ksat1_cal, psi1_cal, cohadd_cal
+apple, 0.8, 1, 0.5, 0.5, 1 
+potato, 0.8, 1, 0.5, 0.5, 1
+sugarbeet, 0.8, 1, 0.5, 0.5, 1
+cereals, 0.8, 1, 0.5, 0.5, 1
+wheeltracks, 1.6, -77, 0.5, 0.5, -77
+
+var, val
+coh_bare_cal, 1
+coh_wheels_cal, 1
+d50_cal, 1
+
+
+[2020-08-16]
+crop_type, n_cal, thetai1_cal, ksat1_cal, psi1_cal, cohadd_cal
+apple, 0.95, 1.1, 0.4, 0.4, 1 
+potato, 0.95, 1, 0.75, 0.7, 1
+sugarbeet, 0.95, 1, 0.4, 0.4, 1
+cereals, 1.3, 1, 0.5, 0.5, 1.5
+wheeltracks, 1.6, -77, 0.75, 0.7, -77
+
+var, val
+coh_bare_cal, 1
+coh_wheels_cal, 1
+d50_cal, 1

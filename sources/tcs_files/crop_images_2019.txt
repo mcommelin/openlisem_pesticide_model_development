@@ -1,0 +1,8 @@
+crop_type, ch, cover, nresi, nveg
+apple, 2, 0.95, 0.06, 0.001
+grass, 0.1, 1, -77, -77
+potato, 0.1, 0.15, 0, 0.005
+sugarbeet, 0.15, 0.25, 0.01, 0.01
+wheatw, 0.7, 1, 0.01, 0.4
+forest, 5, 1, -77, -77
+channel, 0.1, 1, 0, 0.001

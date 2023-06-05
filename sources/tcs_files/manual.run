@@ -1,0 +1,348 @@
+[openLISEM runfile version 6.0]
+
+[Input]
+Map Directory=<path>
+Result datetime=0
+Include Satellite Image=0
+satImage Directory=
+satImage file=
+Advanced Options=1
+Discharge inflow directory=
+Discharge inflow file=
+
+[Output]
+Result Directory=<path>
+Main results file=totals.csv
+Total Series file=totalseries.csv
+Filename point output=hydrographs.csv
+Report point output separate=0
+Add timestamp=0
+Report discharge units=0
+Timeplot as PCRaster=0
+Report digits out=6
+Report format GTiff=0
+End run report=0
+Rainfall map=rainfall.map
+Interception map=interception.map
+Infiltration map=infiltration.map
+Runoff map=runoff.map
+WH max level map=whmax.map
+Channel discharge map=chandism3.map
+Channel Max Q=chanmaxq.map
+Channel Max WH=chanmaxwh.map
+Max Velocity=Vmax.map
+Max Momentum=VHmax.map
+Flood time map=floodtime.map
+Flood start time=floodstart.map
+Storm Drain map=Stormdrain.map
+Storm Drain Vol map=
+Erosion map=detachment.map
+Deposition map=deposition.map
+Soilloss map=soilloss.map
+Channel detachment map=chandet.map
+Channel deposition map=chandep.map
+Filename landunit output=landunit_ero.map
+Flood stats=floodstats.csv
+
+[Simulation times]
+Begin time day=001
+Begin time=0000
+End time day=001
+End time=0125
+Timestep=0
+
+[General options]
+Routing Kin Wave 2D=1
+Include Erosion simulation=1
+Include main channels=0
+Include channel infil=0
+Include channel baseflow=0
+Include stationary baseflow=0
+Include channel culverts=0
+Include channel inflow=0
+Hard Surfaces=0
+Include road system=0
+Include buildings=0
+Add buildings to DEM=0
+Add building fraction=0.30
+Include raindrum storage=0
+Include storm drains=0
+Include Pesticides=0
+Report Pesticides=0
+
+[Meteo]
+Event based=1
+Rainfall file=rain.txt
+Rainfall Directory=<path>
+Rainfall ID interpolation=0
+IDI factor=2.0
+Use Rainfall maps=0
+Rainfall maplist name=rain.txt
+Rainfall Map Directory=<path>
+Rainfall Bias Correction=1.00
+Include ET=0
+Daily ET=1
+ET file=
+ET Directory=
+Use ET maps=0
+ET maplist name=
+ET Map Directory=
+ET Bias Correction=1.00
+Rainfall ET threshold=2.0
+
+[Interception]
+Canopy storage equation=8
+Canopy Openess=0.100
+Include litter interception=0
+Litter interception storage=1.0
+
+[Infiltration]
+Infil Method=3
+Include compacted=0
+Include crusts=0
+Impermeable sublayer=0
+Two layer=1
+Psi user input=1
+Table Directory=
+Table File=profile.inp
+Matric head files=inithead
+Geometric mean Ksat=1
+Include tile drains=0
+
+[Flow]
+Flow Boundary 2D=1
+Minimum reported flood height=0.05
+Include buffers=0
+Include flow barriers=0
+Flow barrier table filename=flowbarriers.txt
+Flood initial level map=0
+Flooding courant factor=0.20
+Timestep flood=0.20
+Use time avg V=1
+Correct DEM=0
+Use 2D Diagonal flow=1
+Flood solution=0
+GW flow explicit=0
+GW flow LDD=0
+GW flow SWAT=0
+GW recharge factor=1.00
+GW flow factor=1.00
+GW river inflow factor=1.00
+GW threshold factor=0.20
+GW slope factor=1.00
+GW deep percolation=0.01
+
+[Erosion]
+KE parameters EQ1=1;28.300;0.520;0.042
+KE parameters EQ2=0;8.900;8.440
+KE parameters EQ3=0;7.600;0.220
+KE time based=0
+Splash Delivery Ratio=0.10
+Splash equation=1
+No detachment boundary=0
+Use material depth=0
+Sediment bulk density=1500.0
+Particle Cohesion of Deposited Layer=0.50
+Calculate erosion inside 2D loop=0
+
+[Sediment]
+Detachment efficiency=2
+Settling Velocity=1
+Flooding SS method=1
+Flooding BL method=2
+Include diffusion=0
+Detachment efficiency channel=2
+Direct efficiency channel=10.000
+River SS method=2
+Use 2 phase flow=0
+River BL method=2
+Include River diffusion=0
+Sigma diffusion=0.50
+
+[Conservation]
+Include grass strips=0
+Grassstrip Mannings n=0.20
+Include Sediment traps=0
+Sediment Trap Mannings n=0.80
+
+[Pesticides]
+Pesticide name=foobicide
+Kd pesticide=0.0
+Kfilm pesticide=0.0
+Kr pesticide=0.0
+Rho mixing layer=0.0
+
+[Calibration]
+Grain Size calibration D50=1.00
+Grain Size calibration D90=1.00
+Smax calibration=1.00
+RR calibration=1.00
+Ksat calibration=1.00
+Ksat2 calibration=1.00
+N calibration=1.00
+Theta calibration=1.00
+Psi calibration=1.00
+SoilDepth1 calibration=1.00
+SoilDepth2 calibration=1.00
+Channel Ksat calibration=1.00
+Channel N calibration=1.00
+Channel tortuosity=1.00
+Cohesion calibration=1.00
+Cohesion Channel calibration=1.00
+Aggregate stability calibration=1.00
+Ucr Channel calibration=1.00
+SV calibration=1.00
+
+[Output maps]
+Runoff maps in l/s/m=
+Erosion map units (0/1/2)=2
+Regular runoff output=1
+Output interval=6
+User defined output=0
+Output times=0
+OutRunoff=0
+OutWH=0
+OutV=0
+OutInterception=0
+OutSurfStor=0
+OutInf=0
+OutTileDrain=0
+OutTheta=0
+OutTileV=0
+OutDet=0
+OutDep=0
+OutTC=0
+OutConc=0
+OutSed=0
+OutSL=0
+OutSedSS=0
+OutSedBL=0
+
+[Advanced]
+Nr user Cores=0
+Flooding SWOF Reconstruction=4
+Flooding SWOF flux limiter=1
+Flood max iterations=200
+Min WH flow=0.0001
+Pit Value=1.00
+Use 2D Diagonal flow new=0
+Use linked list=0
+Use Channel Kinwave dt=0
+Channel KinWave dt=60
+Use Channel Max V=1
+Channel Max V=10.0
+Channel 2D flow connect=0
+GW layer change SD=1
+
+[map names]
+
+[Rainfall]
+ID=id.map
+IDGauges=one.map
+ETID=ETID.map
+SnowID=snowid.map
+
+[Catchment]
+dem=dem_catch.map
+buffers=buffers.map
+grad=slopechan.map
+ldd=ldd_catch.map
+outlet=outlet.map
+outpoint=outlet.map
+
+[Landuse]
+landunit=landuse.map
+cover=per.map
+litter=litter.map
+lai=lai.map
+ch=ch.map
+smax=smax.map
+
+[Surface]
+rr=rr.map
+manning=n.map
+stonefrc=zero.map
+crustfrc=crustfrc.map
+compfrc=compfrac.map
+
+[Infiltration]
+[Swatre]
+profmap=profile.map
+profcrst=profcrst.map
+profwltr=profwltr.map
+profgras=profgras.map
+inithead=inithead
+swatreout=swatreoutput.map
+repelcell=repel.map
+[1st layer Green&Ampt/Smith&Parlange]
+ksat1=ksat1.map
+psi1=psi1.map
+thetas1=thetas1.map
+thetai1=thetai1.map
+soildep1=soildep1.map
+[2nd layer Green&Ampt/Smith&Parlange]
+ksat2=ksat2.map
+psi2=psi2.map
+thetas2=thetas2.map
+thetai2=thetai2.map
+soildep2=soildep2.map
+[Special surfaces]
+ksatcrst=ksatcrst.map
+porecrst=porecrst.map
+ksatcomp=ksatcomp.map
+porecomp=porecomp.map
+
+[Channels]
+lddchan=chanldd_catch.map
+chanwidth=chanwidt.map
+chandepth=chandepth.map
+changrad=chanslope.map
+chanside=chanangle.map
+chanman=chanmann.map
+chanksat=chanksat.map
+chanmaxq=zero.map
+chancoh=chanmaxq.map
+baseflow=baseflow.map
+lddbase=lddbaseflow.map
+basereach=basedistance.map
+whinit=WHinit.map
+
+[Buildings and roads]
+road=roadwidt.map
+housecover=housecover.map
+roofstore=roofstore.map
+drumstore=drumstore.map
+hardsurf=hardsurf.map
+
+[Erosion]
+coh=coh.map
+cohadd=zero.map
+aggrstab=aggrstab.map
+d50=d50.map
+d90=d90.map
+
+[Mitigation]
+grasswidth=grasswid.map
+sedretmax=sedretmax.map
+ksatgras=ksatgras.map
+poregras=poregras.map
+cohgras=cohgras.map
+flowbarrierindex=flowbarrierindex.map
+flowboundary=flowboundary.map
+
+[Storm/Tile drains]
+lddtile=lddtile.map
+tilesink=tilesink.map
+tilediameter=tilediameter.map
+tilewidth=tilewidth.map
+tileheight=tileheight.map
+tiledepth=tiledepth.map
+tilegrad=tilegrad.map
+tileman=tileman.map
+
+[Pesticides]
+pcmixsoil=pcmixsoil.map
+pcmixwat=pcmixwat.map
+pestmixdep=pestmixdep.map
+pestsoildep1=pestsoildep1.map
+pcsoil1=pcsoil1.map
