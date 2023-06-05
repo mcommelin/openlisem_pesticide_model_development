@@ -24,12 +24,12 @@ miniconda_dir <- "C:/MyPrograms/Miniconda3"
 pcr_env <- "lisem"
 #'3. give the full path to the OpenLISEM executable
 #'See readme files for download information.
-# e.g.: "C:/Programs/OpenLISEM/lisem_bin/Lisem.exe"
-lisem_dir <- "C:/Users/MC/Werk/OpenLISEM/lisem_bin/Lisem.exe"
+# e.g.: "C:/Programs/openLISEM-pesticide_v0.7/Lisem.exe"
+lisem_dir <- "C:/Programs/openLISEM-pesticide_v0.7/Lisem.exe"
 #'4. set the directory where the TCRP model scripts are stored
 #'See readme files for download information.
 # e.g. "C:/Programs/TCRP_v1.1/models"
-tcrp_dir <- "C:/Users/MC/Werk/Programs/TCRP_v1.1/models"
+tcrp_dir <- "C:/Programs/TCRP_v1.1/models"
 
 # Initialization ---------------------------------------------------------------
 # load packages
