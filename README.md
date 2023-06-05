@@ -20,8 +20,7 @@ Simulating event based pesticide transport with runoff and erosion: OpenLISEM-pe
 
 **Related datasets and software:**  
 The code and executable for OpenLISEM-pesticide on 4TU repository:  
-DOI:    
-[add link to OpenLISEM-pesticide on repository]  
+DOI: [add link to OpenLISEM-pesticide on repository]  
 
 The code on github: https://github.com/vjetten/openlisem/tree/lisem_pest  
 
@@ -38,22 +37,18 @@ Original TCRP version: https://ees.kuleuven.be/eng/geography/modelling/tcrp/
 
 
 ## Performing all calculations and analysis
-The main calculations are performed in 'paper_all_steps.R', this code follows the order of the related paper as much as possible.
-Initial spatial analysis and transformations have been done separatly and the resulting dataset is provided in 'spatial_data_SL'.
-
-The secondary data used for calculations in this research are stored in 'ext_data/'.
-Functions in R and intermediate data files are provided in 'sources/'
-
 To run the code and analysis for this research the following software and data is required:
  - R, download from: https://cran.r-project.org/
  - RStudio, download from: https://www.rstudio.com/
  - The OpenLISEM-pesticide model
  - The TCRP model
- - the primary dataset
- 
-The observational dataset should be downloaded, and added in a subfolder 'data/'.
-Then open the R project file: 'openlisem_pesticide_model_development.Rproj'. The R script with the full workflow for this study is: 'paper_all_steps.R'
-In this document further guidance on setup and choices is given.
+ - the observational dataset  
+
+The observational dataset should be downloaded, and added in a subfolder 'data/'. Then open the R project file: 'openlisem_pesticide_model_development.Rproj'. 
+The R script with the full workflow for this study is: 'paper_all_steps.R' In this document further guidance on setup and choices is given.
+Initial spatial analysis and transformations have been done separatly and the resulting dataset is provided in 'spatial_data_SL'.
+The secondary data used for calculations in this research are stored in 'ext_data/'. Functions in R and intermediate data files are provided in 'sources/'
+
 Required packages can be installed with: 'install.packages("package name")'.
 
 ## Session info  
