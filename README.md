@@ -39,8 +39,7 @@ Original TCRP version: https://ees.kuleuven.be/eng/geography/modelling/tcrp/
 
 ## Performing all calculations and analysis
 The main calculations are performed in 'paper_all_steps.R', this code follows the order of the related paper as much as possible.
-Initial spatial analysis and transformation have been done separatly and the resulting dataset is provided in 'spatial_data_SL'. The final
-pesticide concentrations are stored in 'sources/lc_all_data.csv' and already provided in the repository.
+Initial spatial analysis and transformations have been done separatly and the resulting dataset is provided in 'spatial_data_SL'.
 
 The secondary data used for calculations in this research are stored in 'ext_data/'.
 Functions in R and intermediate data files are provided in 'sources/'
