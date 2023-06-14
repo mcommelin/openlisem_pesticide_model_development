@@ -19,7 +19,7 @@ Simulating event based pesticide transport with runoff and erosion: OpenLISEM-pe
 [add doi]  
 
 **Related datasets and software:**  
-The code and executable for OpenLISEM-pesticide on 4TU repository:  
+An executable for OpenLISEM-pesticide is available on the 4TU repository:  
 DOI: [add link to OpenLISEM-pesticide on repository]  
 
 The code on github: https://github.com/vjetten/openlisem/tree/lisem_pest  
