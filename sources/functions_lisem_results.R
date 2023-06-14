@@ -532,8 +532,8 @@ figures_results_paper <- function(figure = 1, fig_name = "",
                            expand = margin) +
         scale_color_manual(values = c("Q_obs" = colors1[2], "S_obs" = colors1[1], "Q_sim" = colors1[2], "S_sim" = colors1[1]),
                            guide = guide_legend(override.aes = list(
-                             linetype = c("dashed", "blank", "dashed", "blank"),
-                             shape = c(NA, 19, NA, 19)
+                             linetype = c("blank", "dashed", "blank", "dashed"),
+                             shape = c(19, NA, 19, NA)
                            )),
                            name = " ") +
         labs(x = "Time (min)", y = bquote(Q~ (l~ sec^-1)), 
@@ -640,7 +640,7 @@ figures_results_paper <- function(figure = 1, fig_name = "",
                     ncol = 2)#,
                     # labels = c("28-05-2019", "16-08-2020"), label_fontfamily = "Times New Roman",
                     # label_x = 0.6, label_y = 0.8, label_size = 11)
-  ggsave(plot = plot, filename = paste0("images/figure2.tiff"),
+  ggsave(plot = plot, filename = paste0("images/figure3.tif"),
          width = 20, height = 10, units = "cm", dpi = 600, device = "tiff")
   }
   performance <- bind_rows(mod_totals)

@@ -406,7 +406,7 @@ plot <- plot_grid(pest_plots_man[[3]], pest_plots_man[[4]],
                   label_fontfamily = "Times New Roman",
                   label_x = 0.2, label_y = 1, label_size = 11) 
 
-ggsave(plot = plot, filename = "images/figure6.tiff", 
+ggsave(plot = plot, filename = "images/figure6.tif", 
        width = 170, height = 240, units = "mm",
        dpi = 600, device = "tiff")
 
