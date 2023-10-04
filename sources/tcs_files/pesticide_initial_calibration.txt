@@ -1,22 +1,24 @@
 # Vary values per pesticide; 
-# kd, kfilm and kr give new value, range is undefined!!!
+# kfilm and ERbeta give calibration value.
+# kfilm: 0.00001 - 1 mm/sec, max value approaches instant mixing
+# ERbeta: -0.01 - -0.5
 # For concentration give factor, range between 0.8 and 1.2
-# separate values for each event
 
 [2019-05-28]
-name, kd, kr, kfilm, conc_cal_rat
-Metobromuron, 197, 0.0016, 5e-06, 1
-Glyphosate, 15844, 0.0016, 5e-06, 1
+name, kfilm, ERbeta, conc_cal_rat, kd, ERmax
+Metobromuron, 0.007, -0.2, 1.0, 3.5, 7.4
+Glyphosate, 0.007, -0.2, 1.0, 48, 7.4
 
 var, val
-zs, 0.04
-zm, 0.0025
+zs, 0.05
+zm, 0.006
 
 [2020-08-16]
-name, kd, kr, kfilm, conc_cal_rat
-Metobromuron, 197, 0.0016, 5e-06, 1
-Glyphosate, 15844, 0.0016, 5e-06, 1
+name, kfilm, ERbeta, conc_cal_rat, kd, ERmax
+Metobromuron, 0.007, -0.2, 1.0, 3.5, 7.4
+Glyphosate, 0.007, -0.2, 1.0, 48, 7.4
 
 var, val
-zs, 0.04
-zm, 0.0025
+zs, 0.05 
+zm, 0.006
+

@@ -25,7 +25,7 @@ pcr_env <- "lisem"
 #'3. give the full path to the OpenLISEM executable
 #'See readme files for download information.
 # e.g.: "C:/Programs/openLISEM-pesticide_v0.7/Lisem.exe"
-lisem_dir <- "C:/Programs/openLISEM-pesticide_v0.7/Lisem.exe"
+lisem_dir <- "C:/Users/MC/Werk/OpenLISEM/lisem_bin/Lisem.exe"
 #'4. set the directory where the TCRP model scripts are stored
 #'See readme files for download information.
 # e.g. "C:/Programs/TCRP_v1.1/models"
@@ -358,7 +358,7 @@ s1 <- initial_settings_pest %>%
 s2 <- manual_settings_pest %>%
   mutate(version = "manual")
 comb_set <- bind_rows(s1, s2) %>%
-  pivot_longer(cols = conc_ads:kd, values_to = "value", names_to = "var") %>%
+  pivot_longer(cols = conc_ads:beta, values_to = "value", names_to = "var") %>%
   mutate(date = year(date),
          value = round(value, digits = 2)) %>%
   pivot_wider(names_from = c(date, version), values_from = value) %>%
@@ -397,11 +397,11 @@ for (i in seq_along(res_error)) {
                                                legend = add_legend[i])
 }
 
-plot <- plot_grid(pest_plots_man[[3]], pest_plots_man[[4]], 
-                  pest_plots_man[[1]], pest_plots_man[[2]],
-                  nrow = length(res_error),
-                  labels = c("A: MET 28-05", "B: MET 16-08", 
-                             "C: GLY 28-05", "D: GLY - 16-08"),
+plot <- plot_grid(pest_plots_man[[3]], pest_plots_man[[1]],
+                  pest_plots_man[[4]], pest_plots_man[[2]],
+                  nrow = 4,
+                  labels = c("A: MET 28-05", "B: GLY - 28-05",
+                             "C: MET 16-08", "D: GLY - 16-08"),
                   align = "hv", axis = "rl",
                   label_fontfamily = "Times New Roman",
                   label_x = 0.2, label_y = 1, label_size = 11) 
@@ -409,6 +409,7 @@ plot <- plot_grid(pest_plots_man[[3]], pest_plots_man[[4]],
 ggsave(plot = plot, filename = "images/figure6.tif", 
        width = 170, height = 240, units = "mm",
        dpi = 600, device = "tiff")
+
 
 ## Sensitivity analysis --------------------------------------------------------
 
@@ -426,7 +427,7 @@ sens_dir <- "lisem_runs/sensitivity_oat/"
 # link to the file with the input for all model simulations
 run_vars <- "sources/tcs_files/sensitivity_analysis_input.csv"
 # this is a list with standard map names of variables that will be adjusted
-maps_names <- c("pcmixsoil.map", "pestmixdep.map", "pestsoildep1.map", 
+maps_names <- c("pcmixsoil.map", "pestmixdep.map", 
                 "ksat1.map", "coh.map", "n.map", "psi1.map")
 # select the event as base for OAT analysis : 2019-05-28
 event <- event_sel[1]

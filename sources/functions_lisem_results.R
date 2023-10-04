@@ -120,6 +120,36 @@ data <- bind_rows(df_er[event_pos])
 store <- "lisem_runs/erosion_data.csv"
 write_csv(data, store)
 
+# Total Qwat, Qsed, rain --------------------------------
+df_totals <- vector("list", length = length(event_sel))
+for (j in seq_along(event_sel)) {
+  i <- event_pos[j]
+  Q_tot <- df_dat[[i]] %>%
+    arrange(timestamp) %>%
+    mutate(secs = as.numeric(lead(timestamp) - timestamp)*60,
+           Q_m3 = Q_int * secs) %>%
+    full_join(df_er[[i]], by = "timestamp") %>%
+    arrange(timestamp) %>%
+    mutate(Q_m3 = if_else(Q_int > 0.012, Q_m3, 0),
+           Q_duration = if_else(Q_int > 0.012, 1, 0)) %>%
+    mutate(sed_int = na.approx(sed_conc, maxgap = 10),
+           Sed_kg = sed_int * Q_m3) %>%
+    summarise(Q_max = max(Q_int, na.rm = T),
+              Q_m3 = sum(Q_m3, na.rm = T),
+              Sed_kg = sum(Sed_kg, na.rm = T),
+              Sed_conc_max = max(sed_int, na.rm = T),
+              P = sum(P_m_knmi, na.rm = T),
+              Pi_max = max(P_i_knmi, na.rm = T),
+              D = sum(P_i_knmi > 0.5, na.rm = T)*5,
+              Temp_cr6 = mean(temp, na.rm = T),
+              Q_duration = sum(Q_duration > 0)) %>%
+    mutate(undisc_w = 2.5 * Q_m3)
+  df_totals[[j]] <- Q_tot
+}
+
+totals <- bind_rows(df_totals)
+store <- "lisem_runs/runoff_totals.csv"
+
 ## Pesticide data ----------------------------------------------------------
 
 #' Load all pesticide concentrations
@@ -345,7 +375,7 @@ figures_results_paper <- function(figure = 1, fig_name = "",
     
     # collect relevant data from model results
     if (evaluate < 4) {
-    file <- paste0(base_dir[j], "/res/hydrographs.csv")
+    file <- paste0(base_dir[j], "/res/hydrographs_1.csv")
     
     #load model results timeseries
     hy_names <- readLines(file)[2] %>%
@@ -580,7 +610,7 @@ figures_results_paper <- function(figure = 1, fig_name = "",
       } else {
           pest_load_plot <- pest_load_plot + theme(legend.position = "none")
           }
-      
+      max_y <- min(max(hydrograph$PCs, na.rm = T), 3.0)
       pest_conc_plot <-  ggplot() +
         geom_point(data = event, aes(mins, conc_S), color = colors1[1]) +
         geom_point(data = event, aes(mins, conc_W), color = colors1[2]) +
@@ -588,7 +618,7 @@ figures_results_paper <- function(figure = 1, fig_name = "",
         geom_line(data = hydrograph, aes(mins, PCw), color = colors1[2], linetype = "dashed") +
         theme_classic() +
         xlim(c(0,xlimits[j])) +
-        ylim(c(0, 1.5*max(event$conc_S, na.rm = T))) +
+        ylim(c(0, max_y)) +
         labs(x = "Time (min)", y = bquote(Concentration~ (mg~ kg^-1))) +
         my_theme
       pest_plot <- plot_grid(pest_load_plot, pest_conc_plot, rel_widths = c(1, 1), 

@@ -7,8 +7,6 @@ Include Satellite Image=0
 satImage Directory=
 satImage file=
 Advanced Options=1
-Discharge inflow directory=
-Discharge inflow file=
 
 [Output]
 Result Directory=<path>
@@ -56,10 +54,8 @@ Routing Kin Wave 2D=1
 Include Erosion simulation=1
 Include main channels=0
 Include channel infil=0
-Include channel baseflow=0
 Include stationary baseflow=0
 Include channel culverts=0
-Include channel inflow=0
 Hard Surfaces=0
 Include road system=0
 Include buildings=0
@@ -89,6 +85,9 @@ ET maplist name=
 ET Map Directory=
 ET Bias Correction=1.00
 Rainfall ET threshold=2.0
+Include channel inflow=0
+Discharge inflow file=
+Discharge inflow directory=
 
 [Interception]
 Canopy storage equation=8
@@ -122,12 +121,12 @@ Use time avg V=1
 Correct DEM=0
 Use 2D Diagonal flow=1
 Flood solution=0
-GW flow explicit=0
+Include GW flow=0
+GW flow explicit=1
 GW flow LDD=0
 GW flow SWAT=0
 GW recharge factor=1.00
 GW flow factor=1.00
-GW river inflow factor=1.00
 GW threshold factor=0.20
 GW slope factor=1.00
 GW deep percolation=0.01
@@ -169,7 +168,9 @@ Sediment Trap Mannings n=0.80
 Pesticide name=foobicide
 Kd pesticide=0.0
 Kfilm pesticide=0.0
-Kr pesticide=0.0
+ERbeta pesticide=-0.2
+Kr pesticide=-1.0
+ERmax pesticide=7.4
 Rho mixing layer=0.0
 
 [Calibration]
@@ -232,7 +233,7 @@ Channel KinWave dt=60
 Use Channel Max V=1
 Channel Max V=10.0
 Channel 2D flow connect=0
-GW layer change SD=1
+Channel WF inflow=0
 
 [map names]
 
@@ -240,7 +241,6 @@ GW layer change SD=1
 ID=id.map
 IDGauges=one.map
 ETID=ETID.map
-SnowID=snowid.map
 
 [Catchment]
 dem=dem_catch.map
@@ -301,6 +301,7 @@ chanside=chanangle.map
 chanman=chanmann.map
 chanksat=chanksat.map
 chanmaxq=zero.map
+qinpoints=QinPoints.map
 chancoh=chanmaxq.map
 baseflow=baseflow.map
 lddbase=lddbaseflow.map

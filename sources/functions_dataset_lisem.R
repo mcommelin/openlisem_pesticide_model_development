@@ -206,7 +206,7 @@ lai <- read_csv(paste0(tcs_dir, "lai_crops.txt"))
 lu_input <- read_csv(paste0(tcs_dir, "vars_landuse.csv")) %>%
   select(crop_type, LAI, rr) %>%
   filter(crop_type != "wheeltracks")
-main_dirs <- c("lisem_runs/2019/20190528/", "lisem_runs/2020/20200816/")
+#main_dirs <- c("lisem_runs/2019/20190528/", "lisem_runs/2020/20200816/")
 
 ## RR data
 rough <- read_csv(paste0(tcs_dir, "crop_roughness.csv"))
@@ -258,7 +258,7 @@ for (j in seq_along(event_sel)) {
   }
   
   # add cover, crop height and calculate canopy storage
-  # soft-code the LAI for grass and fraction of trees in apple var calculations.
+  # TODO: soft-code the LAI for grass and fraction of trees in apple var calculations.
   lai_event <- lai_event %>%
     full_join(crop_images, by = "crop_type") %>%
     mutate(LAIn = if_else(crop_type == "apple", 0.33 * LAI + 0.67 * 3, LAI),
@@ -709,6 +709,9 @@ pest_desc <- read_csv("data/Pest_description.csv") %>%
          ai_dose = if_else(ai_dose_unit == "%", ai_dose * 10, ai_dose),
          ai = if_else(ai == "Glyphosate-isopropylammonium", "Glyphosate", ai)) %>%
   rename(compound = ai)
+
+#' difference in molecular weight adjust for that in application rate!!!!!
+
 # chemical characteristics of active ingredients
 compound_char <- read_csv("ext_data/AI_characteristics.csv") %>%
   mutate(koc_class = if_else(koc < 15, "very mobile", "mobile"),
@@ -781,9 +784,10 @@ for(i in seq_along(event_sel)) {
     filter(name == comp_name)
   
   conc_cal_rat <- comp_vals$conc_cal_rat
-  comp_koc <- comp_vals$kd
   comp_kfilm <- comp_vals$kfilm
-  comp_kr <- comp_vals$kr
+  comp_beta <- comp_vals$ERbeta
+  comp_kd <- comp_vals$kd
+  comp_ERM <- comp_vals$ERmax
   
   #cal single values
   cal_vars <- read_csv(pest_cal_file, skip = skip_events[i]+4, n_max = 2)
@@ -792,11 +796,9 @@ for(i in seq_along(event_sel)) {
   zm_val <- cal_vars$val[2] # mixing layer 
   
   # specific choices with samples based on understanding of the study
-  # 1 - discard sample 'slib potatoe' from 2019-05-28. it is not clear to 
-  #   which field this sediment belongs
-  # 2 - add sample 'C_B_LC' from field B to field A, this is within the stream
-  #   line of field be and the measured values correspond with that instead of
-  #   other measurement of field B
+  # 1 - add sample 'C_B_LC' from field B to field A, this is within the stream
+  #   line of field B and the measured values correspond with that instead of
+  #   other measurements of field B
   
   # 1. filter for date and compound 
   comp_catch <- pest_catch %>%
@@ -805,7 +807,6 @@ for(i in seq_along(event_sel)) {
     distinct(an_name, .keep_all = TRUE) %>%
     group_by(large) %>%
     mutate(large = if_else(str_detect(an_name, "20200820_C_B-LC"), "A", large)) %>%
-    filter(!str_detect(name, "^slib potatoe$")) %>%
     # 2. calculate value for every large field
     #' taking the mean is not the only possibility other options are
     #' max or min but also a manual decision for each field based on the
@@ -816,18 +817,22 @@ for(i in seq_along(event_sel)) {
   # the concentration of pesticides on the apple orchard is divided by 2 because
   # the pesticide only are sprayed under the trees and not on the grass sections
   
+  #'the field concentration are a combination of dissolved and sorbed pesticide
+  #'in the soil, to calculate the separate concentration we use a sample soil mass 
+  #'of 2 grams with 30% soil moisture.
+  
   # 3. link lu_nr and make pest.tbl
   layers <- paste0("landuse_", year(event_sel))
   pest_lu <- st_read(dsn = "spatial_data_SL/fields.gpkg", layer = layers[i]) %>%
     st_drop_geometry() %>%
     left_join(comp_catch, by = "large") %>%
     select(lu_nr, conc_field, large) %>%
-    mutate(conc_ads = if_else(is.na(conc_field), 0, conc_field),
-           conc_ads = round(conc_ads / 1000 * conc_cal_rat, digits = 3), # to mg/kg
-           conc_dis = round(conc_ads / comp_koc, digits = 6),
+    mutate(conc_dis = if_else(is.na(conc_field), 0, conc_field / (0.3 + 0.7*comp_kd)),
+           conc_ads = round(conc_dis * comp_kd / 1000 * conc_cal_rat, digits = 3), # to mg/kg
+           conc_dis = round(conc_dis / 1000 * conc_cal_rat, digits = 6), # to mg/L
            zm = zm_val,
            zs = zs_val,
-           conc_zs = round(conc_ads, digits = 3)) 
+           conc_zs = round(conc_ads / 10, digits = 3)) 
   # table for paper
   pest_settings[[i]] <- pest_lu %>%
     select(large, conc_ads, zm, zs) %>%
@@ -835,8 +840,7 @@ for(i in seq_along(event_sel)) {
     filter(!is.na(large)) %>%
     arrange(large) %>%
     mutate(kfilm = comp_kfilm,
-           kr = comp_kr,
-           kd = comp_koc,
+           beta = comp_beta,
            date = date(event_sel[i]),
            compound = comp_name)
   
@@ -927,10 +931,11 @@ if (comp_in > 1) {
 
 #adjust pesticide values
 run_temp <- str_replace_all(run_temp, "Pesticide name=foobicide", paste0("Pesticide name=", comp_name)) # compound name
-run_temp <- str_replace_all(run_temp, "Kd pesticide=0.0", paste0("Kd pesticide=", comp_koc)) # median estimate
 run_temp <- str_replace_all(run_temp, "Kfilm pesticide=0.0", paste0("Kfilm pesticide=", comp_kfilm)) # initial estimate
-run_temp <- str_replace_all(run_temp, "Kr pesticide=0.0", paste0("Kr pesticide=", comp_kr)) # 24 hours 
+run_temp <- str_replace_all(run_temp, "Kd pesticide=0.0", paste0("Kd pesticide=", comp_kd)) # 
+run_temp <- str_replace_all(run_temp, "ERbeta pesticide=-0.2", paste0("ERbeta pesticide=", comp_beta)) # 
 run_temp <- str_replace_all(run_temp, "Rho mixing layer=0.0", paste0("Rho mixing layer=", comp_rho)) # mean bulkdensity
+run_temp <- str_replace_all(run_temp, "ERmax pesticide=7.4", paste0("ERmax pesticide=", comp_ERM))
 
 }
 
@@ -1068,10 +1073,10 @@ file.copy(paste0(sens_wd, "rain.txt"), paste0(sens_wd, "rain_base.txt"))
 sdat <- run_input %>%
   mutate(v_type = if_else(str_detect(val, "%"), "p", "v"),
          val = as.numeric(str_remove_all(val, "\\+|%|v")),
-         d_type = if_else(var %in% c("kfilm", "kr", "kd"), "r", "m"),
+         d_type = if_else(var %in% c("kfilm", "ERbeta", "ERmax", "kd"), "r", "m"),
          d_type = if_else(var == "p", "p", d_type))
 
-var_to_map <- tibble(var = c("conc_ads", "zm", "zs", "ksat", "coh", "n", "psi"),
+var_to_map <- tibble(var = c("conc_ads", "zm", "ksat", "coh", "n", "psi"),
                      map_base = maps_sens_base,
                      map_out = maps_names)
 
@@ -1116,9 +1121,9 @@ if (sdat$d_type[i] == "m") {
 }
 
   # always adjust DP to PP depending on Kd and PP_conc
-  kd_val = 17
+  kd_val = 3.5
   if (sdat$var[i] == "kd") {
-    kd_val = if_else(sdat$v_type[i] == "p", 17 + (sdat$val[i]/100 * 17),
+    kd_val = if_else(sdat$v_type[i] == "p", 3.5 + (sdat$val[i]/100 * 3.5),
                      sdat$val[i])
   }
   com <- paste0("pcmixwat.map=pcmixsoil.map/",kd_val)
@@ -1127,9 +1132,9 @@ if (sdat$d_type[i] == "m") {
 # adjust runfile
 if (sdat$d_type[i] == "r") {
   var_in <- capwords(sdat$var[i])
-  val_base <- as.numeric(str_extract(na.omit(
+  val_base <- as.numeric(str_remove(na.omit(
     str_extract(run_base, paste0("^", var_in, " pesticide=.*"))),
-                          "\\d.*$"))
+                          "^.*pesticide="))
   val_in <- if_else(sdat$v_type[i] == "p", val_base + 
                       ((sdat$val[i]/100) * val_base), sdat$val[i])
   run_temp <- run_base
@@ -1166,7 +1171,7 @@ res_oat_totals[[i]] <- read_csv(filetot) %>%
   rename_with( ~c("var", "val"))
 #hydrograph
 
-file <- paste0(sens_wd, "res/hydrographs.csv")
+file <- paste0(sens_wd, "res/hydrographs_1.csv")
 hy_names <- readLines(file)[2] %>%
   str_split(",", simplify = TRUE) %>%
   str_remove_all(" |#")
@@ -1206,7 +1211,7 @@ store_result_total <- function(work_dir) {
   return(res)
 }
 store_result_hydrograph <- function(work_dir) {
-  file <- paste0(work_dir, "res/hydrographs.csv")
+  file <- paste0(work_dir, "res/hydrographs_1.csv")
   hy_names <- readLines(file)[2] %>%
     str_split(",", simplify = TRUE) %>%
     str_remove_all(" |#")
