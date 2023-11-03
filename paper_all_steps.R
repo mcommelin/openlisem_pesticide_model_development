@@ -29,7 +29,7 @@ lisem_dir <- "C:/Users/MC/Werk/OpenLISEM/lisem_bin/Lisem.exe"
 #'4. set the directory where the TCRP model scripts are stored
 #'See readme files for download information.
 # e.g. "C:/Programs/TCRP_v1.1/models"
-tcrp_dir <- "C:/Programs/TCRP_v1.1/models"
+tcrp_dir <- "C:/Users/MC/Werk/Programs/TCRP_v1.1/models"
 
 # Initialization ---------------------------------------------------------------
 # load packages
