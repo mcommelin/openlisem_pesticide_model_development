@@ -15,11 +15,11 @@ catchment in Limburg, The Netherlands, is used.
 Contact: meindert.commelin@wur.nl  
 
 **Related publication:**  
-Simulating event based pesticide transport with runoff and erosion: OpenLISEM-pesticide v.1  
+Simulating event based pesticide transport with runoff and erosion; OpenLISEM-pesticide v.1  
 [add doi]  
 
 **Related datasets and software:**  
-An executable for OpenLISEM-pesticide is available on the 4TU repository:  
+The code and executable for OpenLISEM-pesticide on 4TU repository:  
 DOI: [add link to OpenLISEM-pesticide on repository]  
 
 The code on github: https://github.com/vjetten/openlisem/tree/lisem_pest  
