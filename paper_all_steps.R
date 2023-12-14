@@ -24,12 +24,12 @@ miniconda_dir <- "C:/MyPrograms/Miniconda3"
 pcr_env <- "lisem"
 #'3. give the full path to the OpenLISEM executable
 #'See readme files for download information.
-# e.g.: "C:/Programs/openLISEM-pesticide_v0.7/Lisem.exe"
-lisem_dir <- "C:/Users/MC/Werk/OpenLISEM/lisem_bin/Lisem.exe"
+# e.g.: "C:/Programs/openLISEM-pesticide_v1.0/Lisem.exe"
+lisem_dir <- "C:/lisem_bin/Lisem.exe"
 #'4. set the directory where the TCRP model scripts are stored
 #'See readme files for download information.
 # e.g. "C:/Programs/TCRP_v1.1/models"
-tcrp_dir <- "C:/Users/MC/Werk/Programs/TCRP_v1.1/models"
+tcrp_dir <- "C:/Programs/TCRP_v1.1/models"
 
 # Initialization ---------------------------------------------------------------
 # load packages
@@ -203,7 +203,7 @@ comb_set <- bind_rows(initial_set, manual_set) %>%
 write_csv(comb_set, "results/settings_runoff_erosion.csv")
 
 
-### make figure 2 --------------------------------------------------------------
+### make figure 4 --------------------------------------------------------------
 events <- ymd(c("2019-05-28", "2020-08-16"))
 base_dir <- paste0("lisem_runs/", year(events), "/", 
                    str_remove_all(as.character(date(events)), "-"))
@@ -382,7 +382,7 @@ comb_perf <- bind_rows(p1, p2) %>%
 # save the performance statistics of the pesticide simulations
 write_csv(comb_perf, "results/performance_pesticides.csv")
 
-### make figure 6 --------------------------------------------------------------
+### make figure 5 --------------------------------------------------------------
 events_all <- rep(ymd(c("2019-05-28", "2020-08-16")), 2)
 base_dir_all <- paste0("lisem_runs/", year(events_all), "/", 
                    str_remove_all(as.character(date(events_all)), "-"))
