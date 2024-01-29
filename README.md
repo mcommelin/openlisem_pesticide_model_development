@@ -16,7 +16,7 @@ Contact: meindert.commelin@wur.nl
 
 **Related publication:**  
 Simulating event based pesticide transport with runoff and erosion; OpenLISEM-pesticide v.1  
-[add doi]  
+DOI: https://doi.org/10.1016/j.envsoft.2024.105960
 
 **Related datasets and software:**  
 The code and executable for OpenLISEM-pesticide on 4TU repository:  
