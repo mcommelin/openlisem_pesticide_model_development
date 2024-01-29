@@ -254,9 +254,9 @@ write_csv(dat, "results/table_samples.csv")
 
 } # end of function load_observations()
 
+
 #.....................................................................
-#.....................................................................
-#' This function handels all possible output from the OpenLISEM results folder
+#' This function handles all possible output from the OpenLISEM results folder
 #' (MC) maybe it is not very clear any more with all the if statement, sorry...
 #' The function has the following input options:
 #' figure = (1-5)
@@ -453,9 +453,9 @@ figures_results_paper <- function(figure = 1, fig_name = "",
                               Qtot_sim = filter(totals_mod, str_detect(var, "Total outflow \\(overland"))$val,
                               Ptot_sim = filter(totals_mod, str_detect(var, "Total Precipitation"))$val,
                               Q_peak_min_sim = filter(totals_mod, str_detect(var, "Peak time discharge"))$val,
-                              NSE_wat = NSE(event$Q, event$Qall),
-                              KGE_wat = KGE(event$Q, event$Qall),
-                              RMSE_wat = rmse(event$Q, event$Qall),
+                              NSE_wat = NSE(event$Qall, event$Q),
+                              KGE_wat = KGE(event$Qall, event$Q),
+                              RMSE_wat = rmse(event$Qall, event$Q),
                               obs_un_wat = obs_err$obs_un_wat,
                               date = event_sel[j]) %>%
       mutate(across(1:8, as.numeric)) %>%
@@ -464,9 +464,9 @@ figures_results_paper <- function(figure = 1, fig_name = "",
     if (evaluate > 1) {
       # totals model
       mod_totals[[j]] <- mod_totals[[j]] %>%
-        mutate(NSE_sed = NSE(event$load, event$Qsall),
-               KGE_sed = KGE(event$load, event$Qsall),
-               RMSE_sed = rmse(event$load, event$Qsall),
+        mutate(NSE_sed = NSE(event$Qsall, event$load),
+               KGE_sed = KGE(event$Qsall, event$load),
+               RMSE_sed = rmse(event$Qsall, event$load),
                obs_un_sed = mean(event$load * 0.06, na.rm = T)) %>%
         mutate(across(5:8, as.numeric)) %>%
         mutate(across(5:8, round, 3))
@@ -474,12 +474,12 @@ figures_results_paper <- function(figure = 1, fig_name = "",
     if (evaluate > 2) {
       # totals model
       mod_totals[[j]] <- mod_totals[[j]] %>%
-        mutate(RMSEs_pest = rmse(event$PP_load, event$PQs),
-               RMSEw_pest = rmse(event$DP_load, event$PQw),
-               NSEs_pest = NSE(event$PP_load, event$PQs),
-               NSEw_pest = NSE(event$DP_load, event$PQw),
-               KGEs_pest = KGE(event$PP_load, event$PQs),
-               KGEw_pest = KGE(event$DP_load, event$PQw),
+        mutate(RMSEs_pest = rmse(event$PQs, event$PP_load),
+               RMSEw_pest = rmse(event$PQw, event$DP_load),
+               NSEs_pest = NSE(event$PQs, event$PP_load),
+               NSEw_pest = NSE(event$PQw, event$DP_load),
+               KGEs_pest = KGE(event$PQs, event$PP_load),
+               KGEw_pest = KGE(event$PQw, event$DP_load),
                obs_un_ps = mean(event$PP_load * 0.18, na.rm = T),
                obs_un_pw = mean(event$DP_load * 0.17, na.rm = T)) %>%
         mutate(across(9:16, as.numeric)) %>%
